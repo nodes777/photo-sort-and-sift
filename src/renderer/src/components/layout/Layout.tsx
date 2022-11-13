@@ -18,18 +18,16 @@ const Layout = () => {
         <div>Path: {folderPath}</div>
         {loading && 'Loading...'}
         {!loading && images.length === 0 && 'No jpg images'}
-        {images
-          .filter((_, index) => index < 10)
-          .map((image) => (
-            <div key={image.id}>
-              <img
-                width={200}
-                height={200}
-                src={`data:image/jpeg;charset=utf-8;base64,${image.data}`}
-                alt={image.id}
-              />
-            </div>
-          ))}
+        {images.map((image) => (
+          <div key={image.id}>
+            <img
+              width={200}
+              height={200}
+              src={`data:image/jpeg;charset=utf-8;base64,${image.data}`}
+              alt={image.id}
+            />
+          </div>
+        ))}
       </div>
     </div>
   );

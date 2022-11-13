@@ -8,16 +8,17 @@
  * When running `npm run build` or `npm run build:main`, this file is compiled to
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
-import { readdir, readFile } from 'fs';
+
+// Native Dependency
+import sharp from 'sharp';
+
+import { readdir, readFile, existsSync } from 'fs';
 import path from 'path';
 import { app, BrowserWindow, shell, ipcMain, dialog } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
-
-// Native Dependency
-const sharp = require('sharp');
 
 class AppUpdater {
   constructor() {
@@ -58,31 +59,93 @@ const sendImagesOnFolder = async (
     });
   })) as string[];
 
-  const getImageData = async (imagePath: string): Promise<ImageData> => {
-    return new Promise((resolve, reject) => {
-      readFile(
-        path.resolve(folder, imagePath),
-        { encoding: 'base64' },
-        (error, data) => {
-          if (error) {
-            console.error(`error reading image ${imagePath}, `, error);
-            reject(error);
+  const getImageData = async (imagePath: string): Promise<ImageData[]> => {
+    const compressedThumbnailPath = `${path.resolve(folder, imagePath)}_thumb`;
+    const compressedImagePath = `${path.resolve(folder, imagePath)}_compressed`;
+
+    // Check if this compressedThumbnailPath already exists, if so, no need to create a new file, assume we've already resized with sharp
+    if (!existsSync(compressedThumbnailPath)) {
+      await sharp(path.resolve(folder, imagePath))
+        .resize(200, 200, { fit: 'contain' })
+        .toFile(compressedThumbnailPath)
+        .then(() => {
+          // @todo - send a message back to client to describe loading state
+          console.log(`Writing thumbnail ${compressedThumbnailPath}`);
+        })
+        .catch((err) =>
+          console.error(
+            `Error writing thumbnail ${compressedThumbnailPath} with sharp: \n ${err}`
+          )
+        );
+    }
+
+    if (!existsSync(compressedImagePath)) {
+      await sharp(path.resolve(folder, imagePath))
+        .resize(600, 400, { fit: 'contain' })
+        .toFile(compressedImagePath)
+        .then(() => {
+          // @todo - send a message back to client to describe loading state
+          console.log(`Writing ${compressedImagePath}`);
+        })
+        .catch((err) =>
+          console.error(
+            `Error writing image ${compressedImagePath} with sharp: \n ${err}`
+          )
+        );
+    }
+
+    const thumbnailPromise: Promise<ImageData> = new Promise(
+      (resolve, reject) => {
+        readFile(
+          path.resolve(folder, compressedThumbnailPath),
+          { encoding: 'base64' },
+          (error, data) => {
+            if (error) {
+              console.error(`error reading image ${imagePath}, `, error);
+              reject(error);
+            }
+            resolve({
+              id: compressedThumbnailPath,
+              data,
+            });
           }
-          resolve({
-            id: imagePath,
-            data,
-          });
-        }
-      );
-    });
+        );
+      }
+    );
+
+    const compressedImagePromise: Promise<ImageData> = new Promise(
+      (resolve, reject) => {
+        readFile(
+          path.resolve(folder, compressedImagePath),
+          { encoding: 'base64' },
+          (error, data) => {
+            if (error) {
+              console.error(`error reading image ${imagePath}, `, error);
+              reject(error);
+            }
+            resolve({
+              id: compressedImagePath,
+              data,
+            });
+          }
+        );
+      }
+    );
+
+    return Promise.all([thumbnailPromise, compressedImagePromise]);
   };
 
-  const allImages = await Promise.all(allImageFileNames.map(getImageData));
+  const allImagesArrOfArr = await Promise.all(
+    allImageFileNames.map(getImageData)
+  );
+  const allImages = allImagesArrOfArr.flat();
 
-  event.reply('images', allImages);
+  event.reply('processedImages', allImages);
 };
 
 ipcMain.on('folder-selection', async (event, args) => {
+  // @todo - Choosing a folder always says "No files match your search" in the windows file browser, can this be less confusing?
+  // We could show the files but we are trying to choose a folder, not a file
   if (!mainWindow) {
     console.error('folder-selection: no main window');
     return;
@@ -200,7 +263,6 @@ app
   .whenReady()
   .then(() => {
     createWindow();
-    console.log(sharp);
 
     app.on('activate', () => {
       // On macOS it's common to re-create a window in the app when the

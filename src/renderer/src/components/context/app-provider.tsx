@@ -29,7 +29,7 @@ const useApp = () => {
           setFolderPath(path);
         }
       });
-      window.electron.ipcRenderer.on('images', (args) => {
+      window.electron.ipcRenderer.on('processedImages', (args) => {
         const castedImages = args as Image[];
         if (args) {
           setImages(castedImages ?? []);
