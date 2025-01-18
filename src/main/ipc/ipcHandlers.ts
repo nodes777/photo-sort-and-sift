@@ -6,6 +6,7 @@ import { generateSharpImages } from '../imageProcessing/generateSharpImages';
 import { readSharpImages } from '../imageProcessing/readSharpImages';
 import { formatImagesToPackages } from '../imageProcessing/packageImages';
 import { GeneratedFileNameEnding } from '../types';
+import { sortAndSift } from './sortAndSift';
 
 let selectedFolder: string | null = null;
 
@@ -30,8 +31,8 @@ export const setupIpcHandlers = (mainWindow: BrowserWindow) => {
       sendImagesOnFolder(event, selectedFolder);
     }
   });
-  ipcMain.on('sort-keepers', async (event, args) => {
-    console.log('sort-keepers', args);
+  ipcMain.on('sort-keepers', async (_event, args) => {
+    sortAndSift(args);
   });
 };
 
