@@ -1,5 +1,7 @@
 {
+  "name": "photo-sort-n-sift",
   "description": "A foundation for scalable desktop apps",
+  "version": "0.0.1",
   "keywords": [
     "electron",
     "boilerplate",
@@ -32,7 +34,7 @@
       "url": "https://github.com/amilajack"
     }
   ],
-  "main": "./src/main/main.ts",
+  "main": "./release/app/dist/main/main.js", 
   "scripts": {
     "build": "concurrently \"npm run build:main\" \"npm run build:renderer\"",
     "build:main": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.main.prod.ts",
@@ -40,13 +42,16 @@
     "postinstall": "ts-node .erb/scripts/check-native-dep.js && electron-builder install-app-deps && cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.renderer.dev.dll.ts",
     "lint": "cross-env NODE_ENV=development eslint . --ext .js,.jsx,.ts,.tsx",
     "package": "ts-node ./.erb/scripts/clean.js dist && npm run build && electron-builder build --publish never",
+    "package:forge": "electron-forge package",
     "prepare": "husky install",
     "rebuild": "electron-rebuild --parallel --types prod,dev,optional --module-dir release/app",
+    "start:forge": "electron-forge start",
     "start": "ts-node ./.erb/scripts/check-port-in-use.js && npm run start:renderer",
     "start:main": "cross-env NODE_ENV=development electronmon -r ts-node/register/transpile-only .",
     "start:preload": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.preload.dev.ts",
     "start:renderer": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack serve --config ./.erb/configs/webpack.config.renderer.dev.ts",
-    "test": "jest"
+    "test": "jest",
+    "make": "electron-forge make"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -110,13 +115,21 @@
   "dependencies": {
     "electron-debug": "3.2.0",
     "electron-log": "4.4.8",
+    "electron-squirrel-startup": "^1.0.1",
     "electron-updater": "5.2.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-router-dom": "6.3.0"
   },
   "devDependencies": {
-    "@types/sharp":"0.31.0",
+    "@electron-forge/cli": "^7.6.1",
+    "@electron-forge/maker-deb": "^7.6.1",
+    "@electron-forge/maker-rpm": "^7.6.1",
+    "@electron-forge/maker-squirrel": "^7.6.1",
+    "@electron-forge/maker-zip": "^7.6.1",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.6.1",
+    "@electron-forge/plugin-fuses": "^7.6.1",
+    "@electron/fuses": "^1.8.0",
     "@pmmmwh/react-refresh-webpack-plugin": "0.5.7",
     "@teamsupercell/typings-for-css-modules-loader": "2.5.1",
     "@testing-library/jest-dom": "5.16.5",
@@ -126,6 +139,7 @@
     "@types/react": "18.0.17",
     "@types/react-dom": "18.0.6",
     "@types/react-test-renderer": "18.0.0",
+    "@types/sharp": "0.31.0",
     "@types/terser-webpack-plugin": "5.0.4",
     "@types/webpack-bundle-analyzer": "4.4.2",
     "@typescript-eslint/eslint-plugin": "5.33.1",
@@ -139,7 +153,6 @@
     "css-minimizer-webpack-plugin": "4.0.0",
     "detect-port": "1.3.0",
     "electron": "20.0.2",
-    "electron-builder": "23.3.3",
     "electron-devtools-installer": "3.2.0",
     "electron-notarize": "1.2.1",
     "electron-rebuild": "3.2.9",
