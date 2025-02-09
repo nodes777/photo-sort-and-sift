@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+      "target": "ES6",
+      "module": "CommonJS",
+      "outDir": "./release/app/dist/main", // Output directory for transpiled main.js
+      "rootDir": "./src/main",  // Your main.ts file location
+      "esModuleInterop": true
+    },
+    "include": ["src/main/**/*.ts"],
+    "exclude": ["node_modules"]
+  }
+  

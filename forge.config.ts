@@ -4,10 +4,12 @@ import type { ForgeConfig } from '@electron-forge/shared-types';
 
 const config: ForgeConfig = {
   packagerConfig: {
-    asar: true,
+    asar: {
+      unpack: 'node_modules/sharp/**',
+    },
     osxSign: {},
-    // asarUnpack: 'node_modules/sharp/**',
   },
+
   rebuildConfig: {},
   makers: [
     {
