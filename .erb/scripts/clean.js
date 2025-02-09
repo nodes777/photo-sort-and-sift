@@ -1,4 +1,5 @@
-import rimraf from 'rimraf';
+const rimraf = require('rimraf');
+
 import webpackPaths from '../configs/webpack.paths';
 
 const foldersToRemove = [
