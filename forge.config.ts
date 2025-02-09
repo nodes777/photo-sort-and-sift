@@ -1,10 +1,12 @@
 const { FusesPlugin } = require('@electron-forge/plugin-fuses');
 const { FuseV1Options, FuseVersion } = require('@electron/fuses');
+import type { ForgeConfig } from '@electron-forge/shared-types';
 
-module.exports = {
+const config: ForgeConfig = {
   packagerConfig: {
     asar: true,
-    asarUnpack: 'node_modules/sharp/**',
+    osxSign: {},
+    // asarUnpack: 'node_modules/sharp/**',
   },
   rebuildConfig: {},
   makers: [
@@ -14,6 +16,7 @@ module.exports = {
     },
     {
       name: '@electron-forge/maker-zip',
+      config: {},
       platforms: ['darwin'],
     },
     {
@@ -43,3 +46,5 @@ module.exports = {
     }),
   ],
 };
+
+export default config;
