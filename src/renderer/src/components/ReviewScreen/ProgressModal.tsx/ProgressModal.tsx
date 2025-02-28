@@ -23,7 +23,7 @@ export const ProgressModal = () => {
   useEffect(() => {
     // Listen for progress updates
     if (window.electron) {
-      window.electron.ipcRenderer.on('sort-progress', (data) => {
+      window.electron.ipcBridge.on('sort-progress', (data) => {
         if (
           typeof data === 'object' &&
           data !== null &&
@@ -37,7 +37,7 @@ export const ProgressModal = () => {
       });
 
       // Listen for completion updates
-      window.electron.ipcRenderer.on('sort-complete', (data) => {
+      window.electron.ipcBridge.on('sort-complete', (data) => {
         if (
           typeof data === 'object' &&
           data !== null &&

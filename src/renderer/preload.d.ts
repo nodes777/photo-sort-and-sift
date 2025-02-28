@@ -3,7 +3,7 @@ import { Channels } from 'main/preload';
 declare global {
   interface Window {
     electron: {
-      ipcRenderer: {
+      ipcBridge: {
         sendMessage(channel: Channels, args: unknown[]): void;
         on(
           channel: Channels,

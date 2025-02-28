@@ -32,7 +32,7 @@ export const ReviewScreen = () => {
         <button
           onClick={() => {
             // Send the subjectKeepers to the main process
-            window.electron.ipcRenderer.sendMessage(
+            window.electron.ipcBridge.sendMessage(
               'sort-keepers',
               subjectKeepers
             );

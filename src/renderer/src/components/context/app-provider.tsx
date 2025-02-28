@@ -48,15 +48,15 @@ const useApp = () => {
 
   const ensureFolderPath = () => {
     if (!folderPath && window.electron) {
-      window.electron.ipcRenderer.sendMessage('folder-selection', []);
+      window.electron.ipcBridge.sendMessage('folder-selection', []);
       setLoading(true);
-      window.electron.ipcRenderer.on('folder-selection', (args) => {
+      window.electron.ipcBridge.on('folder-selection', (args) => {
         const path = args as string;
         if (path) {
           setFolderPath(path);
         }
       });
-      window.electron.ipcRenderer.on('processed-images', (args) => {
+      window.electron.ipcBridge.on('processed-images', (args) => {
         const castedImages = args as ImagePackage[];
 
         if (args) {
@@ -70,7 +70,7 @@ const useApp = () => {
 
   const changeFolder = () => {
     setLoading(true);
-    window.electron.ipcRenderer.sendMessage('folder-selection', [
+    window.electron.ipcBridge.sendMessage('folder-selection', [
       'change-folder',
     ]);
   };

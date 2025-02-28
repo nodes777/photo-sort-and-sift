@@ -9,7 +9,7 @@ export type Channels =
   | 'sort-complete';
 
 contextBridge.exposeInMainWorld('electron', {
-  ipcRenderer: {
+  ipcBridge: {
     sendMessage(channel: Channels, args: unknown[]) {
       ipcRenderer.send(channel, args);
     },
