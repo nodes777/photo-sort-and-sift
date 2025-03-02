@@ -1,4 +1,6 @@
 import { FunctionComponent, PropsWithChildren, useState } from 'react';
+import { CHANGE_FOLDER_EVENT } from 'main/types';
+
 import { outDuplicatesById } from '../../../utils'; // @todo - figure out why test-ubuntu latest can't find 'renderer/utils'
 // eslint-disable-next-line import/no-cycle
 import { AppContext } from './app-context';
@@ -71,7 +73,7 @@ const useApp = () => {
   const changeFolder = () => {
     setLoading(true);
     window.electron.ipcBridge.sendMessage('folder-selection', [
-      'change-folder',
+      CHANGE_FOLDER_EVENT,
     ]);
   };
 

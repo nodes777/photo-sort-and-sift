@@ -5,15 +5,15 @@ import { getJPGFileNames } from '../util';
 import { generateSharpImages } from '../imageProcessing/generateSharpImages';
 import { readSharpImages } from '../imageProcessing/readSharpImages';
 import { formatImagesToPackages } from '../imageProcessing/packageImages';
-import { GeneratedFileNameEnding } from '../types';
+import { CHANGE_FOLDER_EVENT, GeneratedFileNameEnding } from '../types';
 import { sortAndSift } from './sortAndSift/sortAndSift';
 
 let selectedFolder: string | null = null;
 
 export const setupIpcHandlers = (mainWindow: BrowserWindow) => {
   ipcMain.on('folder-selection', async (event, args) => {
-    const changeFolder = args?.[0] === 'change-folder';
-    if (!selectedFolder || changeFolder) {
+    const isChangeFolder = args?.[0] === CHANGE_FOLDER_EVENT;
+    if (!selectedFolder || isChangeFolder) {
       const result = await dialog.showOpenDialog(mainWindow, {
         properties: ['openDirectory'],
       });

@@ -45,3 +45,5 @@ export enum GeneratedFileNameEnding {
   THUMBNAIL = '_thumbnail.jpg',
   BIG_PREVIEW = '_bigPreview.jpg',
 }
+
+export const CHANGE_FOLDER_EVENT = 'change-folder';

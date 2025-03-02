@@ -2,7 +2,7 @@ import { app, BrowserWindow } from 'electron';
 import { createMainWindow } from './app/createWindow';
 import { setupAppEvents } from './app/appEvents';
 import { setupUpdater } from './app/updater';
-import { setupIpcHandlers } from './ipc/ipcHandlers';
+import { setupIpcHandlers } from './ipc/ipcMainHandlers';
 
 let mainWindow: BrowserWindow | null = null;
 
