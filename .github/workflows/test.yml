@@ -23,8 +23,10 @@ jobs:
 
       - name: Debug Cache
         run: |
-          npm config get cache
-          ls -lh $(npm config get cache)
+          if [ "$(uname)" = "Linux" ] || [ "$(uname)" = "Darwin" ]; then
+            ls -lh $(npm config get cache)
+          else
+            dir $(npm config get cache)
 
       - name: npm install
         run: |
