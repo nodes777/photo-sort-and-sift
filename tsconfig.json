@@ -11,6 +11,10 @@
     "pretty": true,
     "sourceMap": true,
     "baseUrl": "./src",
+    "paths": {
+      "main/*": ["main/*"],
+      "utils/*": ["utils/*"],
+    },
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
