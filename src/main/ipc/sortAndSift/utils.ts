@@ -2,8 +2,6 @@ import path from 'path';
 import fs from 'fs';
 import { SubjectKeeper } from 'renderer/src/components/context/app-provider';
 
-const keepersPath = 'D:\\Photos\\Keepers\\';
-
 export const determineDestinationFolder = (keepers: SubjectKeeper[]) => {
   // Create a new folder in keepersPath with the name of the first keepers folder path after Photos\\
   const firstKeeper = keepers[0];
