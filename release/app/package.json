@@ -1,12 +1,12 @@
 {
-  "name": "electron-react-boilerplate",
-  "version": "4.6.0",
-  "description": "A foundation for scalable desktop apps",
+  "name": "photo-sort-and-sift", 
+  "version": "0.0.1",
+  "description": "Sorts photos after expeditions",
   "license": "MIT",
   "author": {
     "name": "Electron React Boilerplate Maintainers",
-    "email": "electronreactboilerplate@gmail.com",
-    "url": "https://github.com/electron-react-boilerplate"
+    "email": "taylor.nodell@gmail.com",
+    "url": "https://github.com/nodes777/photo-sort-and-sift"
   },
   "main": "./dist/main/main.js",
   "scripts": {

@@ -52,10 +52,12 @@ export const sortAndSift = (
   // @todo: find a better way to do this. Probably by doing the grabbing of files from the SD card earlier in the process
   // originalFolder is the path before the last \\ in the first keeper's jpegPath
   //   D:\\Photos\\PhotoSortNSiftTest\\DSC_0376.JPG
-  const originalFolder = keepers[0].imagePackages[0].jpegPath
-    .split('\\')
-    .slice(0, -1)
-    .join('\\');
+  const firstKeeper = keepers[0];
+  const firstImagePackage = firstKeeper.imagePackages[0];
+  const { jpegPath } = firstImagePackage;
+
+  // Get the directory name of the jpegPath
+  const originalFolder = path.dirname(jpegPath);
 
   console.log('originalFolder: ', originalFolder);
   // Delete all the nef files in the original folder

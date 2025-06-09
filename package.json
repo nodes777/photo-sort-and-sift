@@ -46,7 +46,8 @@
     "start:main": "cross-env NODE_ENV=development electronmon -r ts-node/register/transpile-only .",
     "start:preload": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.preload.dev.ts",
     "start:renderer": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack serve --config ./.erb/configs/webpack.config.renderer.dev.ts",
-    "test": "jest"
+    "test": "jest",
+    "clean-win": "rimraf dist build .next node_modules/.cache coverage"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -184,8 +185,8 @@
     "webpack-merge": "5.8.0"
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.erb.ElectronReact",
+    "productName": "Photo Sort N Sift",
+    "appId": "org.erb.PhotoSortNSift",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [

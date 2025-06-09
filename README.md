@@ -33,6 +33,15 @@ To package apps for the local platform:
 npm run package
 ```
 
+## Instructions
+
+1. After launching Photo Sort And Sift select a folder where your images are located
+2. Navigate between selected photos with the arrow keys
+3. Pressing space marks that photo as a keeper and prompts to name the keeper (subject of photo)
+4. Pressing space on another photo marks that photo as a keeper and groups it with the previous photo
+5. End a keeper group by pressing `Esc` or by pressing `n` on an un-grouped photo
+6.
+
 ## Docs
 
 - [Electron Docs](https://www.electronjs.org/docs/latest)

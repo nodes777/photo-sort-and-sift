@@ -2,15 +2,35 @@ import path from 'path';
 import fs from 'fs';
 import { SubjectKeeper } from 'renderer/src/components/context/app-provider';
 
-const keepersPath = 'D:\\Photos\\Keepers\\';
-
 export const determineDestinationFolder = (keepers: SubjectKeeper[]) => {
   // Create a new folder in keepersPath with the name of the first keepers folder path after Photos\\
   const firstKeeper = keepers[0];
   const firstImagePackage = firstKeeper.imagePackages[0];
   const folderPath = firstImagePackage.jpegPath;
-  const folderName = folderPath.split('Photos\\')[1].split('\\')[0];
-  const destinationFolder = path.join(keepersPath, folderName);
+
+  // Get the directory name of the jpegPath
+  const dirName = path.dirname(folderPath);
+
+  // Get the base name (lowest level folder name) of the directory
+  const baseName = path.basename(dirName);
+
+  // Get the parent directory of the directory
+  const parentDir = path.dirname(dirName);
+  // Add a keepers folder to the parent directory
+  const keepersDir = path.join(parentDir, 'keepers');
+
+  // Create the keepers folder if it doesn't exist
+  if (!fs.existsSync(keepersDir)) {
+    fs.mkdirSync(keepersDir);
+  }
+  // Join the parent directory with the base name to create the new folder path
+  const destinationFolder = path.join(keepersDir, baseName);
+
+  // Create the new folder if it doesn't exist
+  if (!fs.existsSync(destinationFolder)) {
+    fs.mkdirSync(destinationFolder);
+  }
+
   return destinationFolder;
 };
 
