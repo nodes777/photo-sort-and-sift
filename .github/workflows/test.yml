@@ -21,13 +21,6 @@ jobs:
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
 
-      - name: Debug Cache
-        run: |
-          if [ "$(uname)" = "Linux" ] || [ "$(uname)" = "Darwin" ]; then
-            ls -lh $(npm config get cache)
-          else
-            dir $(npm config get cache)
-
       - name: npm install
         run: |
           npm install || npm install
