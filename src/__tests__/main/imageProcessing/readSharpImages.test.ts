@@ -4,8 +4,8 @@ import { OutputInfo } from 'sharp';
 import {
   readSharpImageData,
   readSharpImages,
-} from '../../main/imageProcessing/readSharpImages';
-import { SharpOutput, ImageType } from '../../main/types';
+} from '../../../main/imageProcessing/readSharpImages';
+import { SharpOutput, ImageType } from '../../../main/types';
 
 jest.mock('fs');
 

@@ -5,8 +5,8 @@ import {
   generateSharpBigPreview,
   readExistingImageData,
   generateSharpImages,
-} from '../../main/imageProcessing/generateSharpImages';
-import { ImageType } from '../../main/types';
+} from '../../../main/imageProcessing/generateSharpImages';
+import { ImageType } from '../../../main/types';
 
 jest.mock('sharp');
 jest.mock('fs');
