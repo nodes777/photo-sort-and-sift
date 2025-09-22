@@ -4,6 +4,7 @@ import { ImagePackage } from 'main/types';
 import { useApp } from '../context/app-context';
 import BigPreview from '../big-preview/BigPreview';
 import { CreateSubjectKeeperModal } from '../CreateSubjectKeeperModal/CreateSubjectKeeperModal';
+import { ProcessingProgressModal } from '../ProcessingProgressModal';
 
 import './Layout.css';
 import useKeyHandlers from './useKeyHandlers';
@@ -20,6 +21,8 @@ const Layout = () => {
     selectedImage,
     isCreatingSubjectKeeper,
     isShowingReviewScreen,
+    processingProgress,
+    isProcessing,
   } = useApp();
 
   useEffect(() => {
@@ -85,6 +88,12 @@ const Layout = () => {
       </div>
       {isCreatingSubjectKeeper && <CreateSubjectKeeperModal />}
       {isShowingReviewScreen && <ReviewScreen />}
+      {isProcessing && processingProgress && (
+        <ProcessingProgressModal
+          progress={processingProgress}
+          isVisible={isProcessing}
+        />
+      )}
     </div>
   );
 };

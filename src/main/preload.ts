@@ -6,7 +6,8 @@ export type Channels =
   | 'processed-images'
   | 'sort-keepers'
   | 'sort-progress'
-  | 'sort-complete';
+  | 'sort-complete'
+  | 'image-processing-progress';
 
 contextBridge.exposeInMainWorld('electron', {
   ipcBridge: {

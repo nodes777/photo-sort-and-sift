@@ -47,3 +47,11 @@ export enum GeneratedFileNameEnding {
 }
 
 export const CHANGE_FOLDER_EVENT = 'change-folder';
+
+export interface ImageProcessingProgress {
+  currentStep: string;
+  current: number;
+  total: number;
+  percentage: number;
+  fileName?: string;
+}
