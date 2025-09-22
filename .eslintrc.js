@@ -10,6 +10,8 @@ module.exports = {
     'import/prefer-default-export': 'off',
     // Need an empty dependency array in the useEffect for ensureFolderPath
     'react-hooks/exhaustive-deps': 'off',
+
+    'no-console': 'off',
   },
   parserOptions: {
     ecmaVersion: 2020,
