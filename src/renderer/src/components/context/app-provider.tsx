@@ -4,6 +4,7 @@ import { CHANGE_FOLDER_EVENT } from 'main/types';
 import { outDuplicatesById } from '../../../utils'; // @todo - figure out why test-ubuntu latest can't find 'renderer/utils'
 // eslint-disable-next-line import/no-cycle
 import { AppContext } from './app-context';
+import { ProcessingProgressProps } from '../ProcessingProgressModal';
 
 export interface ImageData {
   pathName: string; // path to the sharp generated image
@@ -36,6 +37,9 @@ const useApp = () => {
     useState<string>();
   const [isCreatingSubjectKeeper, setIsCreatingSubjectKeeper] = useState(false);
   const [isShowingReviewScreen, setIsShowingReviewScreen] = useState(false);
+  const [processingProgress, setProcessingProgress] =
+    useState<ProcessingProgressProps | null>(null);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const addImages = (moreImages: ImagePackage[]) => {
     const extendedImages = moreImages.map((image) => ({
@@ -56,7 +60,12 @@ const useApp = () => {
         const path = args as string;
         if (path) {
           setFolderPath(path);
+          setIsProcessing(true);
         }
+      });
+      window.electron.ipcBridge.on('image-processing-progress', (args) => {
+        const progress = args as ProcessingProgressProps;
+        setProcessingProgress(progress);
       });
       window.electron.ipcBridge.on('processed-images', (args) => {
         const castedImages = args as ImagePackage[];
@@ -66,12 +75,15 @@ const useApp = () => {
           setSelectedImage(castedImages[0]);
         }
         setLoading(false);
+        setIsProcessing(false);
+        setProcessingProgress(null);
       });
     }
   };
 
   const changeFolder = () => {
     setLoading(true);
+    setIsProcessing(true);
     window.electron.ipcBridge.sendMessage('folder-selection', [
       CHANGE_FOLDER_EVENT,
     ]);
@@ -96,6 +108,10 @@ const useApp = () => {
     setCurrentSubjectKeeperId,
     isShowingReviewScreen,
     setIsShowingReviewScreen,
+    processingProgress,
+    setProcessingProgress,
+    isProcessing,
+    setIsProcessing,
   };
 };
 

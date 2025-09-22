@@ -12,6 +12,7 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'off',
 
     'no-console': 'off',
+    'no-plusplus': 'off',
   },
   parserOptions: {
     ecmaVersion: 2020,
