@@ -85,14 +85,14 @@ const sendImagesOnFolder = async (
   let currentStep = 0;
 
   for (let i = 0; i < sharpImagePromises.length; i++) {
-    const fileName = path.basename(allJPGFullFilePaths[Math.floor(i / 2)]);
+    // eslint-disable-next-line no-await-in-loop
+    const result = await sharpImagePromises[i];
+    const fileName = path.basename(result.originalFilePath);
     emitProgress(
       'Generating thumbnails and previews...',
       currentStep++,
       fileName
     );
-    // eslint-disable-next-line no-await-in-loop
-    const result = await sharpImagePromises[i];
     sharpImageData.push(result);
   }
 
