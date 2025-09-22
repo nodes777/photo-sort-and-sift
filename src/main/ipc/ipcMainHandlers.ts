@@ -58,7 +58,12 @@ const sendImagesOnFolder = async (
   console.log('allJPGFullFilePaths: \n', allJPGFullFilePaths);
 
   const totalImages = allJPGFullFilePaths.length;
-  const totalSteps = totalImages * 2 + totalImages; // 2 sharp images per file + 1 read per sharp image
+  // 2 sharp images (thumbnail + big preview) per file, then 1 read per sharp image
+  const SHARP_IMAGES_PER_FILE = 2;
+  const READS_PER_SHARP_IMAGE = 1;
+  const totalSharpImages = totalImages * SHARP_IMAGES_PER_FILE;
+  const totalReads = totalSharpImages * READS_PER_SHARP_IMAGE;
+  const totalSteps = totalSharpImages + totalReads;
 
   // Helper function to emit progress
   const emitProgress = (step: string, current: number, fileName?: string) => {
