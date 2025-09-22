@@ -32,6 +32,7 @@ To package apps for the local platform:
 ```bash
 npm run package
 ```
+Run the setup file in `Photo Sort N Sift Setup <version>.exe` in `release/build`
 
 ## Instructions
 
