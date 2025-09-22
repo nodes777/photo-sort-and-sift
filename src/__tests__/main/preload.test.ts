@@ -1,4 +1,17 @@
 import { jest } from '@jest/globals';
+import type { Channels } from '../../main/preload';
+
+type IpcBridge = {
+  sendMessage: (channel: Channels, args: unknown[]) => void;
+  on: (channel: Channels, func: (...args: unknown[]) => void) => () => void;
+  once: (channel: Channels, func: (...args: unknown[]) => void) => void;
+  removeListener: (
+    channel: Channels,
+    listener: (...args: unknown[]) => void
+  ) => void;
+};
+
+type ExposedApi = { ipcBridge: IpcBridge };
 
 // Mocks for electron APIs
 const sendMock = jest.fn();
@@ -37,13 +50,15 @@ describe('preload', () => {
   });
 
   it('should call ipcRenderer.send when sendMessage is used', () => {
-    const [[, api]] = exposeInMainWorldMock.mock.calls as any;
+    const calls = exposeInMainWorldMock.mock.calls as [string, ExposedApi][];
+    const [, api] = calls[0];
     api.ipcBridge.sendMessage('ipc-example', ['foo', 'bar']);
     expect(sendMock).toHaveBeenCalledWith('ipc-example', ['foo', 'bar']);
   });
 
   it('should call ipcRenderer.on and return a remover when on is used', () => {
-    const [[, api]] = exposeInMainWorldMock.mock.calls as any;
+    const calls = exposeInMainWorldMock.mock.calls as [string, ExposedApi][];
+    const [, api] = calls[0];
     const handler = jest.fn();
     const remover = api.ipcBridge.on('ipc-example', handler);
     expect(onMock).toHaveBeenCalledWith('ipc-example', expect.any(Function));
@@ -51,14 +66,16 @@ describe('preload', () => {
   });
 
   it('should call ipcRenderer.once when once is used', () => {
-    const [[, api]] = exposeInMainWorldMock.mock.calls as any;
+    const calls = exposeInMainWorldMock.mock.calls as [string, ExposedApi][];
+    const [, api] = calls[0];
     const handler = jest.fn();
     api.ipcBridge.once('ipc-example', handler);
     expect(onceMock).toHaveBeenCalledWith('ipc-example', expect.any(Function));
   });
 
   it('should call ipcRenderer.removeListener when removeListener is used', () => {
-    const [[, api]] = exposeInMainWorldMock.mock.calls as any;
+    const calls = exposeInMainWorldMock.mock.calls as [string, ExposedApi][];
+    const [, api] = calls[0];
     const handler = jest.fn();
     api.ipcBridge.removeListener('ipc-example', handler);
     expect(removeListenerMock).toHaveBeenCalledWith('ipc-example', handler);
