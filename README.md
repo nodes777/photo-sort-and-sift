@@ -14,6 +14,13 @@ cd photo-sort-and-sift
 npm install
 ```
 
+**Linux note:** On a first run on Linux it might not find `sharp`
+
+```bash
+npm install sharp --save
+npx electron-rebuild -f -w sharp
+```
+
 **Having issues installing? See electron boilerplate's [debugging guide](https://github.com/electron-react-boilerplate/electron-react-boilerplate/issues/400)**
 
 ## Starting Development
