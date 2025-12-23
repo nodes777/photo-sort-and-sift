@@ -41,3 +41,7 @@ npm-debug.log.*
 
 assets/icons/
 assets/icons/**
+
+# Lockfiles — ignore package manager lockfiles
+package-lock.json
+yarn.lock
