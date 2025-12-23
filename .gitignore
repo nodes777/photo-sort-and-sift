@@ -9,6 +9,17 @@ pids
 
 # Coverage directory used by tools like istanbul
 coverage
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Coverage directory used by tools like istanbul
+coverage
 .eslintcache
 
 # Dependency directory
@@ -27,3 +38,6 @@ npm-debug.log.*
 *.css.d.ts
 *.sass.d.ts
 *.scss.d.ts
+
+assets/icons/
+assets/icons/**
