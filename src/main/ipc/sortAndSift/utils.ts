@@ -17,7 +17,7 @@ export const determineDestinationFolder = (keepers: SubjectKeeper[]) => {
   // Get the parent directory of the directory
   const parentDir = path.dirname(dirName);
   // Add a keepers folder to the parent directory
-  const keepersDir = path.join(parentDir, 'keepers');
+  const keepersDir = path.join(parentDir, 'Keepers');
 
   // Create the keepers folder if it doesn't exist
   if (!fs.existsSync(keepersDir)) {
