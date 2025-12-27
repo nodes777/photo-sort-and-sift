@@ -55,7 +55,7 @@ const sendImagesOnFolder = async (
         !jpgFilePathName.endsWith(GeneratedFileNameEnding.BIG_PREVIEW)
     )
     .map((jpgFileName) => path.resolve(folder, jpgFileName));
-  console.log('allJPGFullFilePaths: \n', allJPGFullFilePaths);
+  // console.log('allJPGFullFilePaths: \n', allJPGFullFilePaths);
 
   const totalImages = allJPGFullFilePaths.length;
   // 2 sharp images (thumbnail + big preview) per file, then 1 read per sharp image
