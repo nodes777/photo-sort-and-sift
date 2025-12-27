@@ -2,9 +2,9 @@ import path from 'path';
 
 import { ipcMain, dialog, BrowserWindow } from 'electron';
 import { getJPGFileNames } from '../util';
-import { generateSharpImages } from '../imageProcessing/generateSharpImages';
-import { readSharpImages } from '../imageProcessing/readSharpImages';
-import { formatImagesToPackages } from '../imageProcessing/packageImages';
+import { generateSharpImagesPathsOnly } from '../imageProcessing/generateSharpImages';
+// import { readSharpImages } from '../imageProcessing/readSharpImages';
+import { formatImagesToPackagesPathsOnly } from '../imageProcessing/packageImages';
 import {
   CHANGE_FOLDER_EVENT,
   GeneratedFileNameEnding,
@@ -67,6 +67,7 @@ const sendImagesOnFolder = async (
 
   // Helper function to emit progress
   const emitProgress = (step: string, current: number, fileName?: string) => {
+    console.log(`emitProgress: ${step} (${current}/${totalSteps})`);
     const progress: ImageProcessingProgress = {
       currentStep: step,
       current,
@@ -80,38 +81,40 @@ const sendImagesOnFolder = async (
   emitProgress('Starting image processing...', 0);
 
   // Generate Sharp Images with progress tracking
-  const sharpImagePromises = generateSharpImages(allJPGFullFilePaths);
+  const sharpImagePromises = await generateSharpImagesPathsOnly(
+    allJPGFullFilePaths
+  );
   const sharpImageData = [];
   let currentStep = 0;
 
   for (let i = 0; i < sharpImagePromises.length; i++) {
+    console.log(
+      `Awaiting sharp image ${i + 1} of ${sharpImagePromises.length}...`
+    );
     // eslint-disable-next-line no-await-in-loop
-    const result = await sharpImagePromises[i];
+    const result = sharpImagePromises[i];
+
+    const safeResult = {
+      originalFilePath: result.originalFilePath,
+      sharpFilePath: result.sharpFilePath,
+      type: result.type,
+      orientation: result.orientation,
+    };
+
+    sharpImageData.push(safeResult);
     const fileName = path.basename(result.originalFilePath);
     emitProgress(
       'Generating thumbnails and previews...',
       currentStep++,
       fileName
     );
-    sharpImageData.push(result);
   }
 
-  // Read the sharp images that we just generated with progress tracking
-  emitProgress('Reading processed images...', currentStep);
-  const unpackagedImages = [];
-  const readPromises = readSharpImages(sharpImageData);
-
-  for (let i = 0; i < readPromises.length; i++) {
-    const fileName = path.basename(sharpImageData[i].originalFilePath);
-    emitProgress('Reading processed images...', currentStep++, fileName);
-    // eslint-disable-next-line no-await-in-loop
-    const result = await readPromises[i];
-    unpackagedImages.push(result);
-  }
+  const unpackagedImages = sharpImageData;
 
   // Package these images in a format that will allow us to read back the original jpg and nef paths
   emitProgress('Finalizing...', totalSteps);
-  const packagedImages = formatImagesToPackages(unpackagedImages);
+  const packagedImages = formatImagesToPackagesPathsOnly(unpackagedImages);
   const allImagePackages = Object.values(packagedImages);
 
   event.reply('processed-images', allImagePackages);

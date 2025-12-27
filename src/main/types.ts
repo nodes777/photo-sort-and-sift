@@ -2,7 +2,7 @@ import sharp from 'sharp';
 
 export interface ImageData {
   pathName: string; // path to the sharp generated image
-  data: string; // Base64
+  //data: string; // Base64
 }
 
 export interface ImagePackage {
@@ -32,7 +32,7 @@ export type ReadingSharpData = {
   sharpPathName: string;
   originalPathName: string;
   type: ImageType;
-  data: string;
+  // data: string;
   orientation?: number;
 };
 
@@ -55,3 +55,10 @@ export interface ImageProcessingProgress {
   percentage: number;
   fileName?: string;
 }
+
+export type SafeSharpOutput = {
+  originalFilePath: string;
+  sharpFilePath: string;
+  type: ImageType;
+  orientation?: number;
+};

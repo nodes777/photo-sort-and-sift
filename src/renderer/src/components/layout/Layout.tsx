@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { ImagePackage } from 'main/types';
 
+import { toFileUrl } from 'renderer/utils';
 import { useApp } from '../context/app-context';
 import BigPreview from '../big-preview/BigPreview';
 import { CreateSubjectKeeperModal } from '../CreateSubjectKeeperModal/CreateSubjectKeeperModal';
@@ -80,7 +81,7 @@ const Layout = () => {
                 width={200}
                 height={200}
                 className={selectedImage?.id === image.id ? 'selected' : ''}
-                src={`data:image/jpeg;charset=utf-8;base64,${image.thumbnail.data}`}
+                src={`app-images://${image.thumbnail.pathName}`}
                 alt={image.thumbnail.pathName}
               />
             </button>

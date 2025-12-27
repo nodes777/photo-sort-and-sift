@@ -1,3 +1,4 @@
+import { toFileUrl } from 'renderer/utils';
 import { useApp } from '../context/app-context';
 import './BigPreview.css';
 
@@ -7,7 +8,7 @@ const BigPreview = () => {
   return selectedImage ? (
     <div className="BigPreviewContainer">
       <img
-        src={`data:image/jpeg;charset=utf-8;base64,${selectedImage.bigPreview.data}`}
+        src={`app-images://${selectedImage.bigPreview.pathName}`}
         alt={selectedImage.jpegPath}
       />
     </div>
