@@ -8,7 +8,9 @@ import {
   SafeSharpOutput,
 } from '../types';
 import { validateExistingImage } from '../util';
-console.log('sharp.versions:', sharp.versions);
+console.log('sharp.versions:', sharp.versions);\
+
+const bigPreviewResoltion = { width: 1200, height: 800 };
 
 export const generateSharpImagesPathsOnly = async (
   allJPGFullFilePaths: string[]
@@ -36,7 +38,7 @@ export const generateSharpImagesPathsOnly = async (
     // Generate big preview if missing, ignore returned output
     if (!existsSync(bigPreviewPath)) {
       await sharp(jpgFilePath)
-        .resize(600, 400, { fit: 'contain' })
+        .resize(bigPreviewResoltion.width, bigPreviewResoltion.height, { fit: 'contain' })
         .withMetadata()
         .toFile(bigPreviewPath);
     }

@@ -58,6 +58,7 @@ const sendImagesOnFolder = async (
   // console.log('allJPGFullFilePaths: \n', allJPGFullFilePaths);
 
   const totalImages = allJPGFullFilePaths.length;
+  // @todo: Fix the messaging around tracking progress - Right now it looks like 344 images are being processed when its like 125
   // 2 sharp images (thumbnail + big preview) per file, then 1 read per sharp image
   const SHARP_IMAGES_PER_FILE = 2;
   const READS_PER_SHARP_IMAGE = 1;

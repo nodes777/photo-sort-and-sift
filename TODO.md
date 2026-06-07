@@ -3,6 +3,7 @@
 [] Configure file for photos location on SD card,
 [] And where new keepers go
 [] And quality of bigPreview keepers
+[] Save photos generated in a different folder than the source photos, this makes it easier to count how many originals there were.
 [] Loading a new folder is broken - never shows the images - Maybe still loading? Need better indicator - `(node:24252) UnhandledPromiseRejectionWarning: Error: Input file has corrupt header: VipsJpeg: Premature end of input file`
 [-] Change background color to black
 [-] BUG: When the keeper log gets too long it pushes the bottom bar away
