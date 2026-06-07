@@ -1,6 +1,6 @@
 # TODOs
 
-[] Configure file for photos location on SD card, 
+[] Configure file for photos location on SD card,
 [] And where new keepers go
 [] And quality of bigPreview keepers
 [] Loading a new folder is broken - never shows the images - Maybe still loading? Need better indicator - `(node:24252) UnhandledPromiseRejectionWarning: Error: Input file has corrupt header: VipsJpeg: Premature end of input file`
@@ -13,3 +13,4 @@
 [] delete bigPreview and thumbnail files?
 [] Send Messages to update frontend on status
 [] Add an undo or way to remove a photo from a keeper
+[] Add option to delete bigPreviews and thumbnails at the end of the flow

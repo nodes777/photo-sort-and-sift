@@ -1,37 +1,29 @@
 {
-  "description": "A foundation for scalable desktop apps",
+  "name": "photo-sort-n-sift",
+  "productName": "Photo Sort N Sift",
+  "version": "0.0.1",
+  "description": "An app to help sort and sift through photos quickly, built with Electron and TypeScript.",
   "keywords": [
     "electron",
-    "boilerplate",
-    "react",
     "typescript",
     "ts",
-    "sass",
-    "webpack",
-    "hot",
-    "reload"
+    "photos",
+    "sort"
   ],
-  "homepage": "https://github.com/electron-react-boilerplate/electron-react-boilerplate#readme",
+  "homepage": "https://github.com/nodes777/photo-sort-and-sift#readme",
   "bugs": {
-    "url": "https://github.com/electron-react-boilerplate/electron-react-boilerplate/issues"
+    "url": "https://github.com/nodes777/photo-sort-and-sift/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/electron-react-boilerplate/electron-react-boilerplate.git"
+    "url": "git+https://github.com/nodes777/photo-sort-and-sift.git"
   },
   "license": "MIT",
   "author": {
-    "name": "Electron React Boilerplate Maintainers",
-    "email": "electronreactboilerplate@gmail.com",
-    "url": "https://electron-react-boilerplate.js.org"
+    "name": "Taylor Nodell",
+    "email": "nodes777@gmail.com",
+    "url": "http://taylornodell.com"
   },
-  "contributors": [
-    {
-      "name": "Amila Welihinda",
-      "email": "amilajack@gmail.com",
-      "url": "https://github.com/amilajack"
-    }
-  ],
   "main": "./src/main/main.ts",
   "scripts": {
     "build": "concurrently \"npm run build:main\" \"npm run build:renderer\"",
@@ -191,6 +183,7 @@
   "build": {
     "productName": "Photo Sort N Sift",
     "appId": "org.erb.PhotoSortNSift",
+    "executableName": "photo-sort-n-sift",
     "asar": true,
     "asarUnpack": [
       "**/node_modules/sharp/**/*",
@@ -239,7 +232,8 @@
       "target": [
         "AppImage"
       ],
-      "category": "Development"
+      "category": "Development",
+      "artifactName": "Photo-Sort-N-Sift-${version}.AppImage"
     },
     "directories": {
       "app": "release/app",
@@ -251,15 +245,12 @@
     ],
     "publish": {
       "provider": "github",
-      "owner": "electron-react-boilerplate",
-      "repo": "electron-react-boilerplate"
+      "owner": "nodes777",
+      "repo": "photo-sort-and-sift"
     }
   },
-  "collective": {
-    "url": "https://opencollective.com/electron-react-boilerplate-594"
-  },
   "devEngines": {
-    "node": ">=14.x",
+    "node": ">=18.x",
     "npm": ">=7.x"
   },
   "electronmon": {
